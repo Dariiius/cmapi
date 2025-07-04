@@ -116,7 +116,7 @@ docker run -p <PORT>:<PORT> --env-file .env.local --add-host=host.docker.interna
     - email: admin@example.com
     - plain password: admin
     - hashed password: $2b$12$hF0X9Spqf5NKRUKeJBlEE.0wbqYL5EShCDzNp2W1RDzP/kmTD0dmi
-- Go to `/docs` and authorize using 
+- Go to `/docs` and authorize using the credentials above.
 
 ## Pull and run from Docker Hub
 ```bash

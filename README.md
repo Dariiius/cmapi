@@ -111,9 +111,12 @@ docker run -p <PORT>:<PORT> --env-file .env.local --add-host=host.docker.interna
 
 **Notes**: 
 -  Make sure the database is initialized and running and environment variables are properly configured for your setup. 
--  Create your own admin in the database with these data:
+-  Create and login your own admin in the database with these data:
+    - id: 3fa85f64-5717-4562-b3fc-2c963f66afa0
     - email: admin@example.com
-    - password: $2b$12$hF0X9Spqf5NKRUKeJBlEE.0wbqYL5EShCDzNp2W1RDzP/kmTD0dmi
+    - plain password: admin
+    - hashed password: $2b$12$hF0X9Spqf5NKRUKeJBlEE.0wbqYL5EShCDzNp2W1RDzP/kmTD0dmi
+- Go to `/docs` and authorize using 
 
 ## Pull and run from Docker Hub
 ```bash

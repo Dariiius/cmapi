@@ -117,7 +117,7 @@ docker run -p <PORT>:<PORT> --env-file .env.local --add-host=host.docker.interna
 
 ## Pull and run from Docker Hub
 ```bash
-docker pull darbsmash/candidate_management_api:v1
+docker pull darbsmash/cmapi:v1
 ```
 
 ## Common Commands

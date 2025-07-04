@@ -30,8 +30,8 @@ A RESTful API built with **FastAPI**, **SQLAlchemy**, and **PostgreSQL**, contai
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/candidate-management-api.git
-cd candidate-management-api
+git clone https://github.com/Dariiius/cmapi.git
+cd cmapi
 ```
 
 ### 2. Create venv and activate
@@ -114,3 +114,15 @@ docker run -p <PORT>:<PORT> --env-file .env.local --add-host=host.docker.interna
 -  Create your own admin in the database with these data:
     - email: admin@example.com
     - password: $2b$12$hF0X9Spqf5NKRUKeJBlEE.0wbqYL5EShCDzNp2W1RDzP/kmTD0dmi
+
+## Pull and run from Docker Hub
+```bash
+docker pull darbsmash/candidate_management_api:v1
+```
+
+## Common Commands
+
+```bash
+docker-compose down -v
+docker-compose up --build
+```

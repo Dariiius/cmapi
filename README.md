@@ -123,6 +123,8 @@ docker run -p <PORT>:<PORT> --env-file .env.local --add-host=host.docker.interna
 docker pull darbsmash/cmapi:v1
 ```
 
+**Note:** Use only local database when using image from docker hub.
+
 ## Common Commands
 
 ```bash

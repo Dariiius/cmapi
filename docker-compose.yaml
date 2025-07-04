@@ -1,0 +1,58 @@
+services:
+  db:
+    image: bitnami/postgresql:17.5.0
+    restart: always
+    env_file:
+      - .env
+    environment: 
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    volumes: 
+      - db-data:/bitnami/postgresql
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: /bin/sh -c "alembic upgrade head && python seed_admin.py && fastapi run main.py --host 0.0.0.0 --port 8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+  test:
+    build: .
+    command: >
+      bash -c "
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -h db -U postgres -v ON_ERROR_STOP=1 -c 'DROP DATABASE IF EXISTS ${POSTGRES_TEST_DB};' &&
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -h db -U postgres -v ON_ERROR_STOP=1 -c 'CREATE DATABASE ${POSTGRES_TEST_DB};' &&
+        coverage run -m pytest --tb=short -q -s &&
+        coverage report -m && coverage html
+      "
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_TEST_DB}
+    volumes:
+      - .:/code
+volumes:
+  db-data:
